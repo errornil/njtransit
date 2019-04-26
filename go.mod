@@ -1,1 +1,1 @@
-module github.com/chuhlomin/njtransit-go
+module github.com/chuhlomin/njtransit
