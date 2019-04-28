@@ -9,6 +9,13 @@ Register on NJTransit website to get username and password.
 ## Usage example
 
 ```
+import (
+    njt "github.com/chuhlomin/njtransit"
+    ...
+)
+
+...
+
 client := njt.NewBusDataClient(
     os.Getenv("BUSDATA_USERNAME"),
     os.Getenv("BUSDATA_PASSWORD"),
@@ -18,7 +25,7 @@ client := njt.NewBusDataClient(
 log.Println("Calling GetBusVehicleData...")
 resp, err := client.GetBusVehicleData()
 if err != nil {
-    log.Fatalf("Failed to call GetBusDV: %v", err)
+    log.Fatalf("Failed to call GetBusVehicleData: %v", err)
 }
 log.Printf("%#v", *resp)
 ```
