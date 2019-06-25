@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"hash/crc32"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -95,7 +94,6 @@ func (c *BusDataClient) GetBusVehicleDataStream(r chan BusVehicleDataRow, e chan
 			continue
 		}
 
-		log.Printf("Got %d rows", len(resp.Rows))
 		for _, row := range resp.Rows {
 			if !dedupe || c.isUniqueBusVehicleDataRow(row) {
 				r <- row
