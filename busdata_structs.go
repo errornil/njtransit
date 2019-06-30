@@ -122,7 +122,7 @@ type GetScheduleDataRequest struct {
 
 // GetScheduleDataResponse represents GetScheduleData API response
 type GetScheduleDataResponse struct {
-	Trips []GetScheduleDataTrip `xml:"trop"`
+	Trips []GetScheduleDataTrip `xml:"trip"`
 }
 
 // GetScheduleDataTrip represents part of GetScheduleDataResponse
@@ -145,4 +145,40 @@ type GetScheduleDataTripStop struct {
 	ScheduledDepartureTime string `xml:"cheduleddeparturetime"`  // 8:18 PM
 	TopName                string `xml:"topname"`                // Port Authority Bus Terminal
 	TopCity                string `xml:"topcity"`                // NEW YORK CITY
+}
+
+// GetScheduleXGTFSRequest represents GetScheduleXGTFS API response
+type GetScheduleXGTFSRequest struct {
+	Site    string
+	Minutes string
+}
+
+// GetScheduleXGTFSResponse represents GetScheduleXGTFS API response
+type GetScheduleXGTFSResponse struct {
+	Trips []GetScheduleXGTFSTrip `xml:"trip"`
+}
+
+// GetScheduleXGTFSTrip represents part of GetScheduleXGTFSResponse
+type GetScheduleXGTFSTrip struct {
+	GTFSTripID             int    `xml:"gtfs_trip_id"`
+	GTFSStopID             int    `xml:"gtfs_stop_id"`
+	GTFSStopCode           string `xml:"gtfs_stop_Code"`
+	GTFSRouteID            int    `xml:"gtfs_route_id"`
+	GTFSServiceID          int    `xml:"gtfs_service_id"`
+	GTFSFileDate           string `xml:"gtfs_file_Date"`
+	Route                  string `xml:"route"`
+	Lanegate               string `xml:"lanegate"`               // terminal Line or Gate (".." for inbound buses)
+	ScheduledLaneGate      string `xml:"scheduled_lane_gate"`    // can be empty
+	ManualLaneGate         string `xml:"manual_lane_gate"`       // can be empty
+	DepartureTime          string `xml:"departuretime"`          // example: 1:41 AM
+	ScheduledDepartureDate string `xml:"scheduleddeparturedate"` // example: 03-JAN-19
+	ScheduledDepartureTime string `xml:"scheduleddeparturetime"` // example: 1:41 AM
+	SchedDepTime           string `xml:"sched_dep_Time"`         // example: 03-JAN-19 01.41.00.000000 AM
+	SecLate                string `xml:"sec_late"`               // can be empty
+	BusHeader              string `xml:"busheader"`
+	RunID                  int    `xml:"run_id"`
+	StopName               string `xml:"stopname"`
+	StopCity               string `xml:"stopcity"` // example: NEW YORK CITY
+	TripBlock              string `xml:"trip_block"`
+	Direction              string `xml:"direction"` // can be "In" or "Ou"
 }

@@ -190,7 +190,7 @@ func (c *BusDataClient) GetBusLocations() (*GetBusLocationsResponse, error) {
 	return &response, nil
 }
 
-// GetMessages - This method provides a list of locations that can be used in the GetBusDVXML
+// GetMessages - This method provides a list of messages
 func (c *BusDataClient) GetMessages(request GetMessagesRequest) (*GetMessagesResponse, error) {
 	v := url.Values{}
 	v.Add("username", c.username)
@@ -244,6 +244,36 @@ func (c *BusDataClient) GetScheduleData(request GetScheduleDataRequest) (*GetSch
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse GetScheduleData response: %v, body: %s", err, body)
+	}
+
+	return &response, nil
+}
+
+// GetScheduleXGTFS -This method will provide schedule information.
+// The data consists of the arrivals and departures for the given site that depart within the given number of minutes.
+func (c *BusDataClient) GetScheduleXGTFS(request GetScheduleXGTFSRequest) (*GetScheduleXGTFSResponse, error) {
+	v := url.Values{}
+	v.Add("username", c.username)
+	v.Add("password", c.password)
+	v.Add("site", request.Site)
+	v.Add("minutes", request.Minutes)
+
+	resp, err := http.PostForm(fmt.Sprintf("%s/getScheduleXGTFS", c.busDataURL), v)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send GetScheduleXGTFS request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read GetScheduleXGTFS response: %v", err)
+	}
+
+	response := GetScheduleDataResponse{}
+	err = xml.Unmarshal(body, &response)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse GetScheduleXGTFS response: %v, body: %s", err, body)
 	}
 
 	return &response, nil
