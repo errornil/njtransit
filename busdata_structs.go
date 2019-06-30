@@ -117,7 +117,7 @@ type GetMessagesResponse struct {
 // GetScheduleDataRequest represents GetScheduleData API response
 type GetScheduleDataRequest struct {
 	Site    string
-	Minutes string
+	Minutes int
 }
 
 // GetScheduleDataResponse represents GetScheduleData API response
@@ -150,7 +150,7 @@ type GetScheduleDataTripStop struct {
 // GetScheduleXGTFSRequest represents GetScheduleXGTFS API response
 type GetScheduleXGTFSRequest struct {
 	Site    string
-	Minutes string
+	Minutes int
 }
 
 // GetScheduleXGTFSResponse represents GetScheduleXGTFS API response
