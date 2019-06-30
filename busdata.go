@@ -269,7 +269,7 @@ func (c *BusDataClient) GetScheduleXGTFS(request GetScheduleXGTFSRequest) (*GetS
 		return nil, fmt.Errorf("failed to read GetScheduleXGTFS response: %v", err)
 	}
 
-	response := GetScheduleDataResponse{}
+	response := GetScheduleXGTFSResponse{}
 	err = xml.Unmarshal(body, &response)
 
 	if err != nil {
