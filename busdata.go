@@ -226,7 +226,7 @@ func (c *BusDataClient) GetScheduleData(request GetScheduleDataRequest) (*GetSch
 	v.Add("username", c.username)
 	v.Add("password", c.password)
 	v.Add("site", request.Site)
-	v.Add("minutes", request.Minutes)
+	v.Add("minutes", fmt.Sprintf("%d", request.Minutes))
 
 	resp, err := http.PostForm(fmt.Sprintf("%s/getScheduleDataXML", c.busDataURL), v)
 	if err != nil {
@@ -256,7 +256,7 @@ func (c *BusDataClient) GetScheduleXGTFS(request GetScheduleXGTFSRequest) (*GetS
 	v.Add("username", c.username)
 	v.Add("password", c.password)
 	v.Add("site", request.Site)
-	v.Add("minutes", request.Minutes)
+	v.Add("minutes", fmt.Sprintf("%d", request.Minutes))
 
 	resp, err := http.PostForm(fmt.Sprintf("%s/getScheduleXGTFS", c.busDataURL), v)
 	if err != nil {
