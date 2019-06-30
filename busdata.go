@@ -110,7 +110,7 @@ func (c *BusDataClient) GetNextTrips(request GetNextTripsRequest) (*GetNextTrips
 	v := url.Values{}
 	v.Add("username", c.username)
 	v.Add("password", c.password)
-	v.Add("stopid", request.StopID)
+	v.Add("stopid", fmt.Sprintf("%d", request.StopID))
 
 	resp, err := http.PostForm(fmt.Sprintf("%s/getNextTripsXML", c.busDataURL), v)
 	if err != nil {
@@ -195,7 +195,7 @@ func (c *BusDataClient) GetMessages(request GetMessagesRequest) (*GetMessagesRes
 	v := url.Values{}
 	v.Add("username", c.username)
 	v.Add("password", c.password)
-	v.Add("stopid", request.StopID)
+	v.Add("stopid", fmt.Sprintf("%d", request.StopID))
 
 	resp, err := http.PostForm(fmt.Sprintf("%s/getMessagesXML", c.busDataURL), v)
 	if err != nil {

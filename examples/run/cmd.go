@@ -24,7 +24,7 @@ func main() {
 	log.Printf("%#v", *resp)
 
 	log.Println("Calling GetNextTrips...")
-	resp2, err := client.GetNextTrips(njt.GetNextTripsRequest{StopID: "21820"})
+	resp2, err := client.GetNextTrips(njt.GetNextTripsRequest{StopID: 21820})
 	if err != nil {
 		log.Fatalf("Failed to call GetNextTrips: %v", err)
 	}
@@ -45,7 +45,7 @@ func main() {
 	log.Printf("%#v", *resp4)
 
 	log.Println("Calling GetMessages...")
-	resp5, err := client.GetMessages(njt.GetMessagesRequest{StopID: "21820"})
+	resp5, err := client.GetMessages(njt.GetMessagesRequest{StopID: 21820})
 	if err != nil {
 		log.Fatalf("Failed to call GetMessages: %v", err)
 	}

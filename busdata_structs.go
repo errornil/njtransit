@@ -55,7 +55,7 @@ type ScheduleXGTFSTrip struct {
 
 // GetNextTripsRequest represents GetNextTrips API request
 type GetNextTripsRequest struct {
-	StopID string
+	StopID int
 }
 
 // GetNextTripsResponse represents GetNextTrips API response
@@ -106,7 +106,7 @@ type GetBusLocationsResponse struct {
 
 // GetMessagesRequest represents GetMessages API response
 type GetMessagesRequest struct {
-	StopID string
+	StopID int
 }
 
 // GetMessagesResponse represents GetMessages API response
