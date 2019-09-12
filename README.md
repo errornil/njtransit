@@ -1,5 +1,7 @@
 # njtransit
 
+![Go 1.12](https://img.shields.io/badge/go-1.12-lightgrey)
+
 The library that provides an interface to NJTransit public Bus API.
 
 ## [Register as 3rd Party Developer](https://datasource.njtransit.com/SignUp.aspx)
