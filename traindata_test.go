@@ -40,7 +40,8 @@ func TestTrainClientGetStationList(t *testing.T) {
 				StatusCode: http.StatusOK,
 				Body: &closingBuffer{
 					bytes.NewBufferString(
-						`<STATIONS>
+						`<?xml version="1.0" encoding="utf-8"?>
+						<STATIONS>
 							<STATION>
 								<STATION_2CHAR>AB</STATION_2CHAR>
 								<STATIONNAME>Absecon</STATIONNAME>
@@ -117,7 +118,7 @@ func TestTrainClientGetStationSchedule(t *testing.T) {
 									<DWELL_TIME>45</DWELL_TIME>
 									<PERM_CONNECTING_TRAIN_ID></PERM_CONNECTING_TRAIN_ID>
 									<PERM_PICKUP>False</PERM_PICKUP>
-									<PERM_DROPOFF>False</PERM_DROPOFF>
+									<PERM_DROPOFF></PERM_DROPOFF>
 									<STOP_CODE>S</STOP_CODE>
 									<STOPPING_AT>Ramsey,Ramsey Rt 17,Mahwah,Suffern</STOPPING_AT>
 								</ITEM>
@@ -155,8 +156,8 @@ func TestTrainClientGetStationSchedule(t *testing.T) {
 					Direction:             "Westbound",
 					DwellTimeSeconds:      45,
 					PermConnectingTrainID: "",
-					PermPickup:            false,
-					PermDropoff:           false,
+					PermPickup:            "False",
+					PermDropoff:           "",
 					StopCode:              "S",
 					StoppingAt:            "Ramsey,Ramsey Rt 17,Mahwah,Suffern",
 				},

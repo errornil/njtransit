@@ -26,8 +26,8 @@ type GetStationScheduleResponseItem struct {
 	Direction             string `xml:"DIRECTION"`
 	DwellTimeSeconds      int    `xml:"DWELL_TIME"`
 	PermConnectingTrainID string `xml:"PERM_CONNECTING_TRAIN_ID"`
-	PermPickup            bool   `xml:"PERM_PICKUP"`
-	PermDropoff           bool   `xml:"PERM_DROPOFF"`
+	PermPickup            string `xml:"PERM_PICKUP"`
+	PermDropoff           string `xml:"PERM_DROPOFF"`
 	StopCode              string `xml:"STOP_CODE"` // see Appendix IV
 	StoppingAt            string `xml:"STOPPING_AT"`
 }
