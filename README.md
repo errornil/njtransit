@@ -10,7 +10,7 @@ Register on NJTransit website to get username and password.
 
 ## Usage example
 
-```
+```go
 import (
     njt "github.com/chuhlomin/njtransit"
     ...
