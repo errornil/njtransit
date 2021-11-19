@@ -1,4 +1,4 @@
-module github.com/chuhlomin/njtransit
+module github.com/errornil/njtransit
 
 require (
 	github.com/pkg/errors v0.8.1
