@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	TrainDataProdURL = "http://traindata.njtransit.com:8092/NJTTrainData.asmx"
-	TrainDataTestURL = "http://njttraindata_tst.njtransit.com:8090/njttraindata.asmx"
+	TrainDataProdURL = "https://traindata.njtransit.com/NJTTrainData.asmx"
+	TrainDataTestURL = "https://njttraindatatst.njtransit.com/NJTTrainData.asmx"
 )
 
 var ErrNotImplemented = errors.New("not implemented")
