@@ -38,6 +38,9 @@ func TestTrainClientGetStationList(t *testing.T) {
 		Return(
 			&http.Response{
 				StatusCode: http.StatusOK,
+				Header: map[string][]string{
+					"Content-Type": {"text/xml; charset=utf-8"},
+				},
 				Body: &closingBuffer{
 					bytes.NewBufferString(
 						`<?xml version="1.0" encoding="utf-8"?>
@@ -100,6 +103,9 @@ func TestTrainClientGetStationSchedule(t *testing.T) {
 		Return(
 			&http.Response{
 				StatusCode: http.StatusOK,
+				Header: map[string][]string{
+					"Content-Type": {"text/xml; charset=utf-8"},
+				},
 				Body: &closingBuffer{
 					bytes.NewBufferString(
 						`<STATION>
@@ -183,6 +189,9 @@ func TestTrainClientGetStationMessage(t *testing.T) {
 		Return(
 			&http.Response{
 				StatusCode: http.StatusOK,
+				Header: map[string][]string{
+					"Content-Type": {"text/xml; charset=utf-8"},
+				},
 				Body: &closingBuffer{
 					bytes.NewBufferString(
 						`<STATION>
@@ -233,11 +242,11 @@ func TestTrainClientGetStationMessage(t *testing.T) {
 		&GetStationMessageResponse{
 			TwoChar: "NY",
 			Name:    "New York",
-			Items: []GetStationMessageResponseItem{
+			Items: []*GetStationMessageResponseItem{
 				{
 					ItemIndex:         "0",
 					SchedDepDate:      "11-Sep-2019 12:02:00 AM",
-					Destination:       "Dover -SEC",
+					Destination:       "Dover",
 					Track:             "4",
 					Line:              "Morristown Line",
 					TrainID:           "6683",
@@ -259,4 +268,140 @@ func TestTrainClientGetStationMessage(t *testing.T) {
 		},
 		resp,
 	)
+}
+
+func TestTrainClientGetTrainSchedule19Rec(t *testing.T) {
+	httpClient := new(httpClientMock)
+	httpClient.
+		On(
+			"PostForm",
+			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getTrainScheduleXML19Rec",
+			url.Values{
+				"username": []string{"username"},
+				"password": []string{"password"},
+				"station":  []string{"NY"},
+			},
+		).
+		Return(
+			&http.Response{
+				StatusCode: http.StatusOK,
+				Header: map[string][]string{
+					"Content-Type": {"text/xml; charset=utf-8"},
+				},
+				Body: &closingBuffer{
+					bytes.NewBufferString(
+						`<STATION>
+							<STATION_2CHAR>RH</STATION_2CHAR>
+							<STATIONNAME>Rahway</STATIONNAME>
+							<BANNERMSGS/>
+							<ITEMS>
+							<ITEM>
+								<ITEM_INDEX>0</ITEM_INDEX>
+								<SCHED_DEP_DATE>12-Oct-2019 11:46:30 PM</SCHED_DEP_DATE>
+								<DESTINATION>Long Branch-BH</DESTINATION>
+								<TRACK>B</TRACK>
+								<LINE>No Jersey Coast</LINE>
+								<TRAIN_ID>7285</TRAIN_ID>
+								<CONNECTING_TRAIN_ID>4785</CONNECTING_TRAIN_ID>
+								<STATUS>in 24 Min</STATUS>
+								<SEC_LATE>534</SEC_LATE>
+								<LAST_MODIFIED>12-Oct-2019 11:29:46 PM</LAST_MODIFIED>
+								<BACKCOLOR>CornflowerBlue</BACKCOLOR>
+								<FORECOLOR>white</FORECOLOR>
+								<SHADOWCOLOR>black</SHADOWCOLOR>
+								<GPSLATITUDE>40.7354</GPSLATITUDE>
+								<GPSLONGITUDE>-74.1632</GPSLONGITUDE>
+								<GPSTIME>12-Oct-2019 11:29:45 PM</GPSTIME>
+								<STATION_POSITION>1</STATION_POSITION>
+								<LINEABBREVIATION>NJCL</LINEABBREVIATION>
+								<INLINEMSG></INLINEMSG>
+							</ITEM>
+						</STATION>`,
+					),
+				},
+			},
+			nil,
+		)
+
+	trainClient := NewTrainDataClient(
+		httpClient,
+		"username",
+		"password",
+		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+	)
+	resp, err := trainClient.GetTrainSchedule19Rec("NY")
+
+	assert.NoError(t, err)
+	assert.Equal(
+		t,
+		&GetTrainSchedule19RecResponse{
+			TwoChar: "RH",
+			Name:    "Rahway",
+			Items: []*GetTrainSchedule19RecResponseItem{
+				{
+					ItemIndex:         0,
+					SchedDepDate:      "12-Oct-2019 11:46:30 PM",
+					Destination:       "Long Branch",
+					Track:             "B",
+					Line:              "No Jersey Coast",
+					TrainID:           "7285",
+					ConnectingTrainID: "4785",
+					Status:            "in 24 Min",
+					SecLate:           534,
+					LastModified:      "12-Oct-2019 11:29:46 PM",
+					BackgroundColor:   "CornflowerBlue",
+					ForegroundColor:   "white",
+					ShadowColor:       "black",
+					GPSLatitude:       "40.7354",
+					GPSLongitude:      "-74.1632",
+					GPSTime:           "12-Oct-2019 11:29:45 PM",
+					StationPosition:   "1",
+					LineAbbreviation:  "NJCL",
+					InlineMessage:     "",
+				},
+			},
+		},
+		resp,
+	)
+}
+
+func TestTrainClientGetTrainSchedule19RecInvalidResponse(t *testing.T) {
+	httpClient := new(httpClientMock)
+	httpClient.
+		On(
+			"PostForm",
+			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getTrainScheduleXML19Rec",
+			url.Values{
+				"username": []string{"username"},
+				"password": []string{"password"},
+				"station":  []string{"NY"},
+			},
+		).
+		Return(
+			&http.Response{
+				StatusCode: http.StatusOK,
+				Header: map[string][]string{
+					"Content-Type": {"text/html; charset=utf-8"},
+				},
+				Body: &closingBuffer{
+					bytes.NewBufferString(
+						`
+
+						<!DOCTYPE html>
+						Please enter credentials. <a href="NJTTrainData.asmx">Click here</a> to go back.`,
+					),
+				},
+			},
+			nil,
+		)
+
+	trainClient := NewTrainDataClient(
+		httpClient,
+		"username",
+		"password",
+		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+	)
+	_, err := trainClient.GetTrainSchedule19Rec("NY")
+
+	assert.Error(t, err)
 }

@@ -1,11 +1,12 @@
 package njtransit
 
 import (
-	"bytes"
 	"encoding/xml"
 	"fmt"
+	"html"
 	"io/ioutil"
 	"net/url"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -22,6 +23,7 @@ type TrainDataClient struct {
 	username     string
 	password     string
 	trainDataURL string
+	replacer     *strings.Replacer
 }
 
 func NewTrainDataClient(httpClient httpClient, username, password, trainDataURL string) *TrainDataClient {
@@ -30,6 +32,10 @@ func NewTrainDataClient(httpClient httpClient, username, password, trainDataURL 
 		username:     username,
 		password:     password,
 		trainDataURL: trainDataURL,
+		replacer: strings.NewReplacer(
+			" -SEC", "",
+			"-BH", "",
+		),
 	}
 }
 
@@ -111,18 +117,21 @@ func (t *TrainDataClient) GetStationMessage(station, trainLine string) (*GetStat
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to read GetStationMessage response")
-	}
+	decoder := xml.NewDecoder(resp.Body)
+	decoder.Strict = false
 
 	response := &GetStationMessageResponse{}
-	err = xml.Unmarshal(
-		bytes.ReplaceAll(body, []byte("M&E"), []byte("M&amp;E")),
-		response,
-	)
+	err = decoder.Decode(response)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse GetStationMessage response, body: %s", string(body))
+		return nil, errors.Wrap(err, "failed to decode GetStationMessage response")
+	}
+
+	for _, item := range response.Items {
+		item.Destination = strings.TrimSpace(
+			t.replacer.Replace(
+				html.UnescapeString(item.Destination),
+			),
+		)
 	}
 
 	return response, nil
@@ -136,13 +145,47 @@ func (t *TrainDataClient) GetTrainSchedule(station string, njtransitOnly bool) (
 
 // GetTrainScheduleJSON19Rec - List train schedule for a given station,
 // data is much the same as DepartureVision, but without train stop list information.
-func (t *TrainDataClient) GetTrainSchedule19Rec() (*GetTrainSchedule19RecResponse, error) {
-	return nil, ErrNotImplemented
+func (t *TrainDataClient) GetTrainSchedule19Rec(station string) (*GetTrainSchedule19RecResponse, error) {
+	v := url.Values{}
+	v.Add("username", t.username)
+	v.Add("password", t.password)
+	v.Add("station", station)
+
+	resp, err := t.httpClient.PostForm(fmt.Sprintf("%s/getTrainScheduleXML19Rec", t.trainDataURL), v)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to send GetTrainSchedule19Rec request")
+	}
+	defer resp.Body.Close()
+
+	contentType := resp.Header.Get("Content-Type")
+	if contentType != "text/xml; charset=utf-8" {
+		return nil, fmt.Errorf("invalid response Content-Type: %s", contentType)
+	}
+
+	decoder := xml.NewDecoder(resp.Body)
+	decoder.Strict = false
+
+	response := &GetTrainSchedule19RecResponse{}
+	err = decoder.Decode(response)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to decode GetTrainSchedule19Rec response")
+	}
+
+	for _, item := range response.Items {
+		item.Destination = strings.TrimSpace(
+			t.replacer.Replace(
+				html.UnescapeString(item.Destination),
+			),
+		)
+	}
+
+	return response, nil
 }
 
 // GetVehicleDataXML - Provides the real-time position data for each active train.
 // Provides the latest position, next station and seconds late for any train that
 // has moved in the last 5 minutes.
+// There is a limit of 40,000 requests per day.
 func (t *TrainDataClient) GetVehicleData() (*GetVehicleDataResponse, error) {
 	return nil, ErrNotImplemented
 }
