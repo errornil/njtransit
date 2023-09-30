@@ -4,9 +4,12 @@
 
 The library that provides an interface to NJTransit public Bus API.
 
-## [Register as 3rd Party Developer](https://datasource.njtransit.com/SignUp.aspx)
+## Register as 3rd Party Developer
 
 Register on NJTransit website to get username and password.
+
+- Rail: https://datasource.njtransit.com/SignUp.aspx
+- Bus: https://busdata.njtransit.com/registration/SignUp.aspx
 
 ## Usage example
 
