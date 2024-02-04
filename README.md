@@ -10,6 +10,7 @@ Register on NJTransit website to get username and password.
 
 - Rail: https://datasource.njtransit.com/SignUp.aspx
 - Bus: https://busdata.njtransit.com/registration/SignUp.aspx
+- New portal: https://developer.njtransit.com/registration/
 
 ## Usage example
 

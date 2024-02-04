@@ -32,7 +32,7 @@ func TestTrainClientGetStationList(t *testing.T) {
 	httpClient.
 		On(
 			"PostForm",
-			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getStationListXML",
+			"https://traindata.njtransit.com/NJTTrainData.asmx/getStationListXML",
 			url.Values{"username": []string{"username"}, "password": []string{"password"}},
 		).
 		Return(
@@ -64,7 +64,7 @@ func TestTrainClientGetStationList(t *testing.T) {
 		httpClient,
 		"username",
 		"password",
-		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+		"https://traindata.njtransit.com/NJTTrainData.asmx",
 	)
 	resp, err := trainClient.GetStationList()
 
@@ -92,7 +92,7 @@ func TestTrainClientGetStationSchedule(t *testing.T) {
 	httpClient.
 		On(
 			"PostForm",
-			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getStationScheduleXML",
+			"https://traindata.njtransit.com/NJTTrainData.asmx/getStationScheduleXML",
 			url.Values{
 				"username": []string{"username"},
 				"password": []string{"password"},
@@ -140,7 +140,7 @@ func TestTrainClientGetStationSchedule(t *testing.T) {
 		httpClient,
 		"username",
 		"password",
-		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+		"https://traindata.njtransit.com/NJTTrainData.asmx",
 	)
 	resp, err := trainClient.GetStationSchedule("AZ", true)
 
@@ -178,7 +178,7 @@ func TestTrainClientGetStationMessage(t *testing.T) {
 	httpClient.
 		On(
 			"PostForm",
-			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getStationMSGXML",
+			"https://traindata.njtransit.com/NJTTrainData.asmx/getStationMSGXML",
 			url.Values{
 				"username":  []string{"username"},
 				"password":  []string{"password"},
@@ -232,7 +232,7 @@ func TestTrainClientGetStationMessage(t *testing.T) {
 		httpClient,
 		"username",
 		"password",
-		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+		"https://traindata.njtransit.com/NJTTrainData.asmx",
 	)
 	resp, err := trainClient.GetStationMessage("NY", "")
 
@@ -275,7 +275,7 @@ func TestTrainClientGetTrainSchedule19Rec(t *testing.T) {
 	httpClient.
 		On(
 			"PostForm",
-			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getTrainScheduleXML19Rec",
+			"https://traindata.njtransit.com/NJTTrainData.asmx/getTrainScheduleXML19Rec",
 			url.Values{
 				"username": []string{"username"},
 				"password": []string{"password"},
@@ -327,7 +327,7 @@ func TestTrainClientGetTrainSchedule19Rec(t *testing.T) {
 		httpClient,
 		"username",
 		"password",
-		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+		"https://traindata.njtransit.com/NJTTrainData.asmx",
 	)
 	resp, err := trainClient.GetTrainSchedule19Rec("NY")
 
@@ -370,7 +370,7 @@ func TestTrainClientGetTrainSchedule19RecInvalidResponse(t *testing.T) {
 	httpClient.
 		On(
 			"PostForm",
-			"http://traindata.njtransit.com:8092/NJTTrainData.asmx/getTrainScheduleXML19Rec",
+			"https://traindata.njtransit.com/NJTTrainData.asmx/getTrainScheduleXML19Rec",
 			url.Values{
 				"username": []string{"username"},
 				"password": []string{"password"},
@@ -399,7 +399,7 @@ func TestTrainClientGetTrainSchedule19RecInvalidResponse(t *testing.T) {
 		httpClient,
 		"username",
 		"password",
-		"http://traindata.njtransit.com:8092/NJTTrainData.asmx",
+		"https://traindata.njtransit.com/NJTTrainData.asmx",
 	)
 	_, err := trainClient.GetTrainSchedule19Rec("NY")
 
