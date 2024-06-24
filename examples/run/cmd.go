@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	njt "github.com/chuhlomin/njtransit"
+	njt "github.com/errornil/njtransit"
 )
 
 func main() {
