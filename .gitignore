@@ -1,2 +1,4 @@
 *.back
-cover.out
+/cover.out
+/.env
+/ignore
