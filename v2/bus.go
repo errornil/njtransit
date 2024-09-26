@@ -176,6 +176,9 @@ func (bc *BusClient) callAPI(url string) ([]byte, error) {
 
 func (bc *BusClient) callAPIProto(url string) (*gtfs.FeedMessage, error) {
 	b, err := bc.callAPI(url)
+	if err != nil {
+		return nil, fmt.Errorf("callAPI: %v", err)
+	}
 
 	feed := &gtfs.FeedMessage{}
 	err = proto.Unmarshal(b, feed)
