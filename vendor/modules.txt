@@ -1,6 +1,9 @@
 # github.com/davecgh/go-spew v1.1.0
 ## explicit
 github.com/davecgh/go-spew/spew
+# github.com/errornil/transit_realtime v0.0.0-20240928052954-11bab7223f49
+## explicit; go 1.23.1
+github.com/errornil/transit_realtime
 # github.com/pkg/errors v0.8.1
 ## explicit
 github.com/pkg/errors

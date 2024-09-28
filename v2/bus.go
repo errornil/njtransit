@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	gtfs "github.com/errornil/njtransit/proto/transit_realtime"
+	gtfs "github.com/errornil/transit_realtime"
 	"google.golang.org/protobuf/proto"
 )
 

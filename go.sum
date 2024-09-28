@@ -1,5 +1,7 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/errornil/transit_realtime v0.0.0-20240928052954-11bab7223f49 h1:cuvbSgq1crqVEgFaYv8eiY2APqFK4mjIziqF/e3Vig4=
+github.com/errornil/transit_realtime v0.0.0-20240928052954-11bab7223f49/go.mod h1:yrV7jFeYM32Cpzr4V8TsfZlmAohqiFKnV9QgBjKTXc4=
 github.com/google/go-cmp v0.5.5 h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
